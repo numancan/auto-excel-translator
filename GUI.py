@@ -8,9 +8,7 @@ import _thread
 
 LANGUAGES = ("English", "Turkce",)
 
-# Scaling for progress bar
-
-
+# Scale
 def map(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
@@ -28,7 +26,7 @@ class Window():
 
         # ******CREATING WINDOW*******
         self.root = Tk()
-        self.root.title('Excel Translater')
+        self.root.title('Excel Translator')
         self.root.resizable(False, False)
 
         bg_image = PhotoImage(file="background.png")
@@ -61,30 +59,30 @@ class Window():
         self.bgCanvas.create_text(30, 130, text="Source", fill=COLOR, anchor='nw', font=("Helvetica", 14))
         self.bgCanvas.create_text(200, 130, text="Target", fill=COLOR, anchor='nw', font=("Helvetica", 14))
 
-        self.srcCol = Entry(self.bgCanvas, width=ENTRY_WIDTH)
+        self.srcCol = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
         self.srcCol.place(x=100, y=134)
         self.srcCol.insert(INSERT, 0)
 
-        self.trgtCol = Entry(self.bgCanvas, width=ENTRY_WIDTH)
+        self.trgtCol = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
         self.trgtCol.place(x=265, y=134)
         self.trgtCol.insert(INSERT, 1)
 
         self.bgCanvas.create_line(10, 163, 340, 163, fill="white")
 
-        # ROW4: Starting rows
+        # ROW4: Starting row
         self.bgCanvas.create_text(14, 170, text="Starting Row:", fill=COLOR, anchor='nw', font=FONT)
-        self.bgCanvas.create_text(30, 195, text="Source", fill=COLOR, anchor='nw', font=("Helvetica", 14))
-        self.bgCanvas.create_text(200, 195, text="Target", fill=COLOR, anchor='nw', font=("Helvetica", 14))
+        # self.bgCanvas.create_text(30, 195, text="Source", fill=COLOR, anchor='nw', font=("Helvetica", 14))
+        # self.bgCanvas.create_text(200, 195, text="Target", fill=COLOR, anchor='nw', font=("Helvetica", 14))
 
-        self.strtTrgt = Entry(self.bgCanvas, width=ENTRY_WIDTH)
-        self.strtTrgt.place(x=100, y=198)
+        self.strtTrgt = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
+        self.strtTrgt.place(x=150, y=173)
         self.strtTrgt.insert(INSERT, 6)
 
-        self.strtSrc = Entry(self.bgCanvas, width=ENTRY_WIDTH)
-        self.strtSrc.place(x=265, y=198)
-        self.strtSrc.insert(INSERT, 6)
+        # self.strtSrc = Entry(self.bgCanvas, width=ENTRY_WIDTH)
+        # self.strtSrc.place(x=265, y=198)
+        # self.strtSrc.insert(INSERT, 6)
 
-        self.bgCanvas.create_line(10, 226, 340, 226, fill="white")
+        self.bgCanvas.create_line(10, 205, 340, 205, fill="white")
 
         # ROW5: Progress Bar
         self.s = Style(self.bgCanvas)
@@ -97,11 +95,11 @@ class Window():
                          'sticky': 'nswe'})])
         self.progBar = Progressbar(self.bgCanvas, orient="horizontal", length=318, style="LabeledProgressbar")
         self.s.configure("LabeledProgressbar", text="0 %      ", foreground='black', background=COLOR)
-        self.progBar.place(x=15, y=238)
+        self.progBar.place(x=15, y=220)
 
         # ROW6: Start Button
         self.startBtn = Button(self.bgCanvas, text="Start", width=10, height=2, bg=COLOR, fg="white", command=self.start)
-        self.startBtn.place(x=140, y=270)
+        self.startBtn.place(x=140, y=255)
 
         self.root.mainloop()
 

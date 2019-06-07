@@ -1,4 +1,4 @@
-from writeinsheet import WriteInCell
+from cellwriter import Writer
 import mtranslate
 import xlrd
 
@@ -17,7 +17,7 @@ class Translator():
             excelFormat = xls.split(".")[1]
             # If selected file is a XLS
             if excelFormat == "xls":
-                self.wrt = WriteInCell(xls)
+                self.wrt = writer(xls)
                 workbook = xlrd.open_workbook(xls)
                 self.sheet = workbook.sheet_by_index(0)
                 self.run(LANG[self.lang], xls.split("/")[-1])
