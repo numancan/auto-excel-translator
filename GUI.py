@@ -55,17 +55,16 @@ class Window():
         self.bgCanvas.create_line(10, 97, 340, 97, fill="white")
 
         # ROW3: Column
-        self.bgCanvas.create_text(14, 105, text="Column:", fill=COLOR, anchor='nw', font=FONT)
-        self.bgCanvas.create_text(30, 130, text="Source", fill=COLOR, anchor='nw', font=("Helvetica", 14))
-        self.bgCanvas.create_text(200, 130, text="Target", fill=COLOR, anchor='nw', font=("Helvetica", 14))
+        self.bgCanvas.create_text(14, 108, text="Translate from", fill=COLOR, anchor='nw', font=FONT)
+        self.bgCanvas.create_text(198, 108, text="to", fill=COLOR, anchor='nw', font=FONT)
 
         self.srcCol = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
-        self.srcCol.place(x=100, y=134)
-        self.srcCol.insert(INSERT, 0)
+        self.srcCol.place(x=158, y=110)
+        self.srcCol.insert(INSERT,"A0")
 
         self.trgtCol = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
-        self.trgtCol.place(x=265, y=134)
-        self.trgtCol.insert(INSERT, 1)
+        self.trgtCol.place(x=222, y=110)
+        self.trgtCol.insert(INSERT, "END")
 
         self.bgCanvas.create_line(10, 163, 340, 163, fill="white")
 
@@ -149,3 +148,5 @@ class Window():
             _thread.start_new_thread(Translator, (self,))
             self.startBtn["state"] = DISABLED
             self.startBtn.configure(bg="gray")
+
+Window()
