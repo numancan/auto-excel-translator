@@ -9,13 +9,16 @@ import _thread
 LANGUAGES = ("English", "Turkce",)
 
 # Scale
+
+
 def map(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
 
 FONT = ("Helvetica", 16)
 ENTRY_WIDTH = 5
-COLOR = "dodger blue"
+
+COLOR = {"line": "sea green", "ui": "dodger blue"}
 
 
 class Window():
@@ -36,54 +39,47 @@ class Window():
         self.bgCanvas.create_image(0, 0, image=bg_image, anchor='nw')
 
         # ROW1: XLS files
-        self.bgCanvas.create_text(15, 20, text="XLS Files", fill=COLOR, anchor='nw', font=FONT)
-        self.bgCanvas.create_line(10, 52, 340, 52, fill="white")
+        self.bgCanvas.create_text(15, 20, text="XLS Files", fill=COLOR["ui"], anchor='nw', font=FONT)
+        self.bgCanvas.create_line(10, 52, 340, 52, fill=COLOR["line"])
 
         self.direcText = Entry(self.bgCanvas, width=22)
         self.direcText.place(x=125, y=23)
 
-        self.browseBtn = Button(self.bgCanvas, text="Browse", width=7, bg=COLOR,
+        self.browseBtn = Button(self.bgCanvas, text="Browse", width=7, bg=COLOR["ui"],
                                 fg="white", command=self.askDirec)
         self.browseBtn.place(x=275, y=19)
 
         # ROW2: Target Language
-        self.bgCanvas.create_text(14, 65, text="Target Language", fill=COLOR, anchor='nw', font=FONT)
+        self.bgCanvas.create_text(14, 65, text="Target Language", fill=COLOR["ui"], anchor='nw', font=FONT)
         self.cmbTarget = Combobox(self.bgCanvas)
         self.cmbTarget['values'] = ("English", "Turkce")
         self.cmbTarget.current(0)
         self.cmbTarget.place(x=185, y=67)
-        self.bgCanvas.create_line(10, 97, 340, 97, fill="white")
+        self.bgCanvas.create_line(10, 97, 340, 97, fill=COLOR["line"])
 
         # ROW3: Column
-        self.bgCanvas.create_text(14, 108, text="Translate from", fill=COLOR, anchor='nw', font=FONT)
-        self.bgCanvas.create_text(198, 108, text="to", fill=COLOR, anchor='nw', font=FONT)
+        self.bgCanvas.create_text(14, 108, text="Translate from", fill=COLOR["ui"], anchor='nw', font=FONT)
+        self.bgCanvas.create_text(198, 108, text="to", fill=COLOR["ui"], anchor='nw', font=FONT)
+        self.bgCanvas.create_text(262, 108, text="to", fill=COLOR["ui"], anchor='nw', font=FONT)
 
-        self.srcCol = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
-        self.srcCol.place(x=158, y=110)
-        self.srcCol.insert(INSERT,"A0")
+        # From row
+        self.fromRow = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
+        self.fromRow.place(x=158, y=110)
+        self.fromRow.insert(INSERT, "A0")
 
-        self.trgtCol = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
-        self.trgtCol.place(x=222, y=110)
-        self.trgtCol.insert(INSERT, "END")
+        # To row
+        self.toRow = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
+        self.toRow.place(x=222, y=110)
+        self.toRow.insert(INSERT, "END")
 
-        self.bgCanvas.create_line(10, 163, 340, 163, fill="white")
+        # To column
+        self.toColumn = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
+        self.toColumn.place(x=286, y=110)
+        self.toColumn.insert(INSERT, "B")
 
-        # ROW4: Starting row
-        self.bgCanvas.create_text(14, 170, text="Starting Row:", fill=COLOR, anchor='nw', font=FONT)
-        # self.bgCanvas.create_text(30, 195, text="Source", fill=COLOR, anchor='nw', font=("Helvetica", 14))
-        # self.bgCanvas.create_text(200, 195, text="Target", fill=COLOR, anchor='nw', font=("Helvetica", 14))
+        self.bgCanvas.create_line(10, 140, 340, 140, fill=COLOR["line"])
 
-        self.strtTrgt = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
-        self.strtTrgt.place(x=150, y=173)
-        self.strtTrgt.insert(INSERT, 6)
-
-        # self.strtSrc = Entry(self.bgCanvas, width=ENTRY_WIDTH)
-        # self.strtSrc.place(x=265, y=198)
-        # self.strtSrc.insert(INSERT, 6)
-
-        self.bgCanvas.create_line(10, 205, 340, 205, fill="white")
-
-        # ROW5: Progress Bar
+        # ROW4: Progress Bar
         self.s = Style(self.bgCanvas)
         self.s.layout("LabeledProgressbar",
                       [('LabeledProgressbar.trough',
@@ -93,12 +89,12 @@ class Window():
                                        {"sticky": ""})],
                          'sticky': 'nswe'})])
         self.progBar = Progressbar(self.bgCanvas, orient="horizontal", length=318, style="LabeledProgressbar")
-        self.s.configure("LabeledProgressbar", text="0 %      ", foreground='black', background=COLOR)
-        self.progBar.place(x=15, y=220)
+        self.s.configure("LabeledProgressbar", text="0 %      ", foreground='black', background=COLOR["ui"])
+        self.progBar.place(x=15, y=155)
 
-        # ROW6: Start Button
-        self.startBtn = Button(self.bgCanvas, text="Start", width=10, height=2, bg=COLOR, fg="white", command=self.start)
-        self.startBtn.place(x=140, y=255)
+        # ROW5: Start Button
+        self.startBtn = Button(self.bgCanvas, text="Start", width=10, height=2, bg=COLOR["ui"], fg="white", command=self.start)
+        self.startBtn.place(x=140, y=185)
 
         self.root.mainloop()
 
@@ -130,7 +126,8 @@ class Window():
         self.progBar.update()
 
     def getInputs(self):
-        return self.cmbTarget.get(), int(self.srcCol.get()), int(self.trgtCol.get()), int(self.strtSrc.get()), int(self.strtTrgt.get())
+        return self.cmbTarget.get(), int(self.fromRow.get()),
+            int(self.toRow.get()), int(self.toColumn.get())
 
     def restart(self):
         self.direcText.delete(0, END)
@@ -139,7 +136,7 @@ class Window():
         self.s.configure("LabeledProgressbar", text="0 %      ")
         self.progBar.update()
         self.startBtn["state"] = NORMAL
-        self.startBtn.configure(bg=COLOR)
+        self.startBtn.configure(bg=COLOR["ui"])
 
     def start(self):
         if self.directory == "" or self.directory == None:
@@ -148,5 +145,6 @@ class Window():
             _thread.start_new_thread(Translator, (self,))
             self.startBtn["state"] = DISABLED
             self.startBtn.configure(bg="gray")
+
 
 Window()

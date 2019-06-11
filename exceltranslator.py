@@ -9,20 +9,23 @@ class Translator():
     def __init__(self, window):
         self.restart = False
         self.window = window
-        self.lang, self.srcCol, self.trgtCol, self.strtSrc, self.strtTrgt = self.window.getInputs()
+        self.lang, self.fromRow, self.toRow, self.toColumn = self.window.getInputs()
         self.translatedXLS = []
 
         for xls in self.window.directory:
 
             excelFormat = xls.split(".")[1]
+
             # If selected file is a XLS
             if excelFormat == "xls":
                 self.wrt = writer(xls)
                 workbook = xlrd.open_workbook(xls)
                 self.sheet = workbook.sheet_by_index(0)
                 self.run(LANG[self.lang], xls.split("/")[-1])
+
                 if self.restart:
                     break
+
                 self.translatedXLS.append(xls.split("/")[-1])
 
             # TODO: SUPPORT
@@ -36,6 +39,8 @@ class Translator():
             self.window.message("info", "Translation completed!")
             self.window.restart()
             self.restart = False
+
+    def translate(self, lang, xls):
 
     def run(self, lang, xls):
         for i in range(self.strtSrc - 1, self.sheet.nrows):
