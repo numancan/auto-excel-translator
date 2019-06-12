@@ -18,7 +18,7 @@ def map(x, in_min, in_max, out_min, out_max):
 FONT = ("Helvetica", 16)
 ENTRY_WIDTH = 5
 
-COLOR = {"line": "sea green", "ui": "dodger blue"}
+COLOR = {"line": "sea green", "ui": "dodger blue","bg":"light cyan"}
 
 
 class Window():
@@ -42,7 +42,7 @@ class Window():
         self.bgCanvas.create_text(15, 20, text="XLS Files", fill=COLOR["ui"], anchor='nw', font=FONT)
         self.bgCanvas.create_line(10, 52, 340, 52, fill=COLOR["line"])
 
-        self.direcText = Entry(self.bgCanvas, width=22)
+        self.direcText = Entry(self.bgCanvas, width=22,bg=COLOR["bg"])
         self.direcText.place(x=125, y=23)
 
         self.browseBtn = Button(self.bgCanvas, text="Browse", width=7, bg=COLOR["ui"],
@@ -63,17 +63,17 @@ class Window():
         self.bgCanvas.create_text(262, 108, text="to", fill=COLOR["ui"], anchor='nw', font=FONT)
 
         # From row
-        self.fromRow = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
-        self.fromRow.place(x=158, y=110)
-        self.fromRow.insert(INSERT, "A0")
+        self.fromCell = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER,bg=COLOR["bg"])
+        self.fromCell.place(x=158, y=110)
+        self.fromCell.insert(INSERT, "A1")
 
         # To row
-        self.toRow = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
-        self.toRow.place(x=222, y=110)
-        self.toRow.insert(INSERT, "END")
+        self.toCell = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER,bg=COLOR["bg"])
+        self.toCell.place(x=222, y=110)
+        self.toCell.insert(INSERT, "END")
 
         # To column
-        self.toColumn = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER)
+        self.toColumn = Entry(self.bgCanvas, width=ENTRY_WIDTH, justify=CENTER,bg=COLOR["bg"])
         self.toColumn.place(x=286, y=110)
         self.toColumn.insert(INSERT, "B")
 
@@ -118,16 +118,15 @@ class Window():
         entry.insert(INSERT, text)
         entry.update()
 
-    def updateProgBar(self, current, maxRow, finished, xlsname):
-        progVal = round(map(current, int(self.strtSrc.get()) - 1, maxRow - 1, 0, 100), 2)
+    def updateProgBar(self, current,minRow,maxRow, finished, xlsname):
+        progVal = round(map(current, minRow, maxRow, 0, 100), 2)
         self.progBar["value"] = progVal
         self.s.configure("LabeledProgressbar", text="[{0}/{1}] {3} {2}%".format(finished,
                                                                                 len(self.directory), progVal, xlsname))
         self.progBar.update()
 
     def getInputs(self):
-        return self.cmbTarget.get(), int(self.fromRow.get()),
-            int(self.toRow.get()), int(self.toColumn.get())
+        return self.cmbTarget.get(), self.fromCell.get(),self.toCell.get(), self.toColumn.get()
 
     def restart(self):
         self.direcText.delete(0, END)
@@ -145,6 +144,3 @@ class Window():
             _thread.start_new_thread(Translator, (self,))
             self.startBtn["state"] = DISABLED
             self.startBtn.configure(bg="gray")
-
-
-Window()
