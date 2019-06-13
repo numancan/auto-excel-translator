@@ -30,7 +30,7 @@ Translates automatically desired rows in excel document into multiple languages.
 ## TODO
 * Support all excel file.
 * Advanced error log.
-* Pause
+* Pause button.
 
 
 
