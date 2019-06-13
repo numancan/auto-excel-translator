@@ -35,4 +35,4 @@ Translates automatically desired rows in excel document into multiple languages.
 
 
 ## Author
-* Numan Can İpekçi. [[Linkedin]](linkedin.com/in/numancan)
+* Numan Can İpekçi. [[Linkedin]](https://www.linkedin.com/in/numancan)
