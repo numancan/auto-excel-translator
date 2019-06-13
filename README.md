@@ -12,6 +12,7 @@ Translates automatically desired rows in excel document into multiple languages.
 <img src="images/usage.gif">
 </p>
 
+
 1- Run the program.
 
 2- Click to browse button and select .XLS file to translate. You can select more than one file.
@@ -24,10 +25,14 @@ Translates automatically desired rows in excel document into multiple languages.
 
 5- Click start button.  
 
+
+
 ## TODO
 * Support all excel file.
 * Advanced error log.
 * Pause
+
+
 
 ## Author
 * Numan Can İpekçi. [[Linkedin]](linkedin.com/in/numancan)
