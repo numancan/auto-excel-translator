@@ -20,6 +20,7 @@ Translates automatically desired rows in excel document into multiple languages.
 3- Select target language.
 
 4- You have to specify where will the translation begin and end also where this translation will write. 
+
 Example:
 
 ![example](images/example.png)
