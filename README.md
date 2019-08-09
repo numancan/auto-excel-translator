@@ -19,7 +19,8 @@ Translates automatically desired rows in excel document into multiple languages.
 
 3- Select target language.
 
-4- You have to specify where will the translation begin and end also where this translation will write. Example:
+4- You have to specify where will the translation begin and end also where this translation will write. 
+Example:
 
 ![example](images/example.png)
 
@@ -31,8 +32,3 @@ Translates automatically desired rows in excel document into multiple languages.
 * Support all excel file.
 * Advanced error log.
 * Pause button.
-
-
-
-## Author
-* Numan Can İpekçi. [[Linkedin]](https://www.linkedin.com/in/numancan)
